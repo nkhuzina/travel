@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Two girls One Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
+</head>
+
+<body>
+
+<!-- header -->
+<div th:replace="~{header :: header}">...</div>
+<!-- //header -->
+
+<section class="admin">
+    <div style="max-width:500px;">
+        <h3 th:text="${'Welcome - ' + username}"></h3>
+        <p class="" th:text="${'You logged in as - ' + roles}"></p>
+    </div>
+    <div>
+        <a th:href="@{/displayMessages}">
+            <div>
+                <h3>Messages</h3>
+            </div>
+        </a>
+    </div>
+    <div>
+        <a th:href="@{/displayProfile}">
+            <div>
+                <h3>Profile</h3>
+            </div>
+        </a>
+    </div>
+    <div>
+        <a th:href="@{/admin/displayClasses}">
+            <div>
+                <h3>Classes</h3>
+            </div>
+        </a>
+    </div>
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin/displayCourses}">
+            <div>
+                <h3>Courses</h3>
+            </div>
+        </a>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_MODERATOR')">
+        <a th:href="@{/student/displayCourses}">
+            <div>
+                <h3>Courses</h3>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a th:href="@{/public/register}">
+            <div>
+                <h3>User Registration</h3>
+            </div>
+        </a>
+    </div>
+</section>
+
+
+<!-- footer block -->
+<div th:replace="~{footer :: footer}">...</div>
+<!-- //footer block -->
+</body>
+
+</html>

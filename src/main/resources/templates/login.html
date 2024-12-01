@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Two Girls One Globe</title>
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Template CSS Style link -->
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+<script type="assets/text/javascript" src="assets/js/main.js"></script>
+<!-- header -->
+<div th:replace="~{header :: header}">...</div>
+<!-- //header -->
+
+<section class="hero">
+    <div class="hero-image">
+        <img src="assets/images/mission.jpg" alt="mission">
+        <div class="hero-text">
+            <!-- <h2>Mission statement</h2> -->
+            <p>We create unforgettable travel experiences,</p>
+            <p>taking care of every detail for inspiring adventures.</p>
+        </div>
+    </div>
+</section>
+
+<!-- login block -->
+<section class="login">
+            <h3>LogIn</h3>
+                <form th:action="@{/login}" method="post" class="login-form">
+                        <div role="alert" th:if="${!#strings.isEmpty(errorMessge)}"
+                            th:text="${errorMessge}" />
+                        <input type="text" name="username" id="username" placeholder="Username"/>
+                        <input type="password" name="password" id="password" placeholder="Password"/>
+                        <!--input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /-->
+                        <button type="submit">Log In</button>
+                </form>
+</section>
+<!-- //login block -->
+
+<!-- footer block -->
+<div th:replace="~{footer :: footer}">...</div>
+<!-- //footer block -->
+</body>
+
+</html>

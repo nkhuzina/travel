@@ -1,0 +1,47 @@
+.admin container{
+  height: 500px;
+ }
+
+.admin table {
+  border-collapse: collapse;
+  width: 100%;
+ }
+
+.admin h3 {
+     color: #003b6f;
+     margin-bottom: 20px;
+ }
+
+.admin th, td {
+     border: 1px solid #ddd;
+     padding: 8px;
+     text-align: left;
+}
+
+.admin tr:nth-child(even){
+     background-color: #f2f2f2;
+}
+
+.admin tr:hover {
+     background-color: #ddd;
+}
+
+.admin th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #003b6f;
+  color: white;
+}
+
+.admin td a {
+  vertical-align: middle;
+  background-color: #003b6f;
+  border: none;
+  color: white;
+  padding: 12px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}

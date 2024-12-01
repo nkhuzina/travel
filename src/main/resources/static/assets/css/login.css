@@ -1,0 +1,59 @@
+ .login {
+     max-width: 600px;
+     margin: 0 auto;
+     padding: 20px;
+     text-align: center;
+ }
+
+ .login h2 {
+     color: #003b6f;
+     margin-bottom: 20px;
+ }
+
+ .login-form {
+     display: flex;
+     flex-direction: column;
+     gap: 15px;
+ }
+
+ .login-form label {
+     font-weight: bold;
+     color: #003b6f;
+     text-align: left;
+ }
+
+ .login input[type="text"],
+ .login input[type="tel"],
+ .login input[type="password"],
+ .login input[type="email"],
+ .login textarea {
+     width: 100%;
+     padding: 10px;
+     border: 1px solid #ccc;
+     border-radius: 5px;
+     font-size: 16px;
+ }
+
+ .checkbox-group {
+     display: flex;
+     gap: 10px;
+ }
+
+ .checkbox-group label {
+     font-weight: normal;
+ }
+
+ .login button {
+     background-color: #0055a5;
+     color: #fff;
+     border: none;
+     padding: 12px;
+     font-size: 16px;
+     cursor: pointer;
+     border-radius: 5px;
+     transition: background-color 0.3s;
+ }
+
+ .login button:hover {
+     background-color: #003b6f;
+ }
