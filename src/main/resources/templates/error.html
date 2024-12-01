@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Two girls one Globe</title>
+    <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
+    <!-- Template CSS Style link -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+    <script type="assets/text/javascript" src="assets/js/main.js"></script>
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
+
+    <section class="hero">
+        <div class="hero-image">
+            <img src="assets/images/mission.jpg" alt="mission">
+            <div class="hero-text">
+                <!-- <h2>Mission statement</h2> -->
+                <p>We create unforgettable travel experiences,</p>
+                <p>taking care of every detail for inspiring adventures.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- error block -->
+    <section class="error">
+        <div class="error">
+            <h3 class="h2">
+                Looks like you're lost
+            </h3>
+            <p th:text="${'Error Message - ' + errormsg}"></p>
+            <a th:href="@{/home}" class="button">Go to Home</a>
+        </div>
+   </section>
+<!-- //error block -->
+
+<!-- footer block -->
+<div th:replace="~{footer :: footer}">...</div>
+<!-- //footer block -->
+</body>
+
+</html>

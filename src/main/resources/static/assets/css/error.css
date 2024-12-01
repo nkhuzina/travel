@@ -1,0 +1,22 @@
+ .error {
+     max-width: 600px;
+     margin: 0 auto;
+     padding: 20px;
+     text-align: center;
+ }
+
+ .error h2 {
+     color: #003b6f;
+     margin-bottom: 20px;
+ }
+
+ .error button {
+     background-color: #0055a5;
+     color: #fff;
+     border: none;
+     padding: 12px;
+     font-size: 16px;
+     cursor: pointer;
+     border-radius: 5px;
+     transition: background-color 0.3s;
+ }
