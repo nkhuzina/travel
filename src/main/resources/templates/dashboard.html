@@ -24,9 +24,25 @@
         <p class="" th:text="${'You logged in as - ' + roles}"></p>
     </div>
     <div>
-        <a th:href="@{/displayMessages}">
+        <a th:href="@{/displayMessages/page/1?sortField=name&sortDir=desc}">
             <div>
                 <h3>Messages</h3>
+            </div>
+        </a>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin/user}">
+            <div>
+                <h3>User Registration</h3>
+            </div>
+        </a>
+    </div>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin/displayUsers/page/1?sortField=userId&sortDir=desc}">
+            <div>
+                <h3>Users</h3>
             </div>
         </a>
     </div>
@@ -37,36 +53,24 @@
             </div>
         </a>
     </div>
-    <div>
-        <a th:href="@{/admin/displayClasses}">
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <a th:href="@{/admin/displayTours/page/1?sortField=tourId&sortDir=desc}">
             <div>
-                <h3>Classes</h3>
+                <h3>Tours</h3>
             </div>
         </a>
     </div>
     <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a th:href="@{/admin/displayCourses}">
+        <a th:href="@{/admin/tour}">
             <div>
-                <h3>Courses</h3>
+                <h3>Create Tour</h3>
             </div>
         </a>
     </div>
 
-    <div sec:authorize="hasRole('ROLE_MODERATOR')">
-        <a th:href="@{/student/displayCourses}">
-            <div>
-                <h3>Courses</h3>
-            </div>
-        </a>
-    </div>
 
-    <div>
-        <a th:href="@{/public/register}">
-            <div>
-                <h3>User Registration</h3>
-            </div>
-        </a>
-    </div>
+
 </section>
 
 
