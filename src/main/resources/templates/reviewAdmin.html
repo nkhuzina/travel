@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Two Girls One Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/form.css">
+</head>
+
+<body>
+<div class="container">
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
+
+    <section class="testiminal-msg">
+
+        <div class="testiminal-msg-caption"><h2>Share Your Travel Experiences With Us!</h2></div>
+
+        <div class="testiminal-msg-img">
+            <img src="assets/images/review.jpg" alt="">
+        </div>
+
+        <div class="testiminal-msg-form">
+            <ul>
+                <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('review.*')}" th:text="${error}" />
+            </ul>
+            <form action="#" th:action="@{/saveReview}" method="post" class="review-form" th:object="${review}">
+                <div class="testiminal-msg-form__item">
+                    <input type="text" th:field="*{name}" placeholder="Your Name" required>
+                </div>
+                <div class="testiminal-msg-form__item">
+                    <textarea th:field="*{reviewText}" placeholder="Type Your Experience Here" rows="10" required></textarea>
+                </div>
+                <div class="testiminal-msg-form__item">
+                    <button type="submit">Send</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="testimonails">
+        <div th:each="testimonial: ${reviewList}" class="testimonial-card">
+            <p th:text="${testimonial.reviewText}"></p>
+            <h3 th:text="${testimonial.name}"></h3>
+        </div>
+    </section>
+
+    <!-- footer block -->
+    <div th:replace="~{footer :: footer}">...</div>
+    <!-- //footer block -->
+</div>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="utf-8">
+    <title>Two Girls One Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+<body>
+<section class="container">
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
+    <section class="testimonial-container">
+        <div class="add-testimonial">
+            <a th:href="@{/review}">
+                <h2> Share Your Experiens </h2>
+            </a>
+
+        </div>
+        <div class="testimonials">
+            <div th:each="testimonial: ${reviewList}" class="testimonial-card">
+                <h3 th:text="${testimonial.name}"></h3>
+                <p th:text="${testimonial.reviewText}"></p>
+            </div>
+        </div>
+
+    </section>
+    <!-- footer block -->
+    <div th:replace="~{footer :: footer}">...</div>
+    <!-- //footer block -->
+</section>
+</body>
+
+</html>
