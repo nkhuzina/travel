@@ -1,7 +1,7 @@
 package com.tgog.rest;
 
 
-import com.eazybytes.eazyschool.model.Response;
+import com.tgog.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice(annotations = RestController.class)
 @Order(1)
 public class GlobalExceptionRestController extends ResponseEntityExceptionHandler {
-
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {

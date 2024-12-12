@@ -1,10 +1,6 @@
 package com.tgog.security;
 
-import com.eazybytes.eazyschool.model.Person;
-import com.eazybytes.eazyschool.model.Roles;
-import com.eazybytes.eazyschool.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,17 +10,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import com.tgog.repository.UserRepository;
+import com.tgog.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Profile("prod")
-public class EazySchoolUsernamePwdAuthenticationProvider
+public class AppUsernamePwdAuthenticationProvider
         implements AuthenticationProvider
 {
     @Autowired
-    private PersonRepository personRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -34,19 +31,19 @@ public class EazySchoolUsernamePwdAuthenticationProvider
             throws AuthenticationException {
         String email = authentication.getName();
         String pwd = authentication.getCredentials().toString();
-        Person person = personRepository.readByEmail(email);
-        if(null != person && person.getPersonId()>0 &&
-                passwordEncoder.matches(pwd,person.getPwd())){
+        User user = userRepository.readByEmail(email);
+        if(null != user && user.getUserId()>0 &&
+                passwordEncoder.matches(pwd,user.getPwd())){
             return new UsernamePasswordAuthenticationToken(
-                    email, null, getGrantedAuthorities(person.getRoles()));
+                    email, null, getGrantedAuthorities(user.getRole()));
         }else{
             throw new BadCredentialsException("Invalid credentials!");
         }
     }
 
-    private List<GrantedAuthority> getGrantedAuthorities(Roles roles) {
+    private List<GrantedAuthority> getGrantedAuthorities(String role) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+roles.getRoleName()));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_"+role));
         return grantedAuthorities;
     }
 

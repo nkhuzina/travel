@@ -12,12 +12,14 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 @Entity
 @Table(name="contact_msg")
+@NamedQuery(name = "Contact.updateMsgStatus", query = "UPDATE Contact c SET c.status = ?1 WHERE c.contactId = ?2")
 public class Contact extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name="native", strategy ="native")
     @Column(name = "contact_id")
     private int contactId;
+
     @NotBlank(message="Name must not be blank")
     @Size(min=3, message="Name must be at least 3 characters long")
     private String name;

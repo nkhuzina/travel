@@ -4,79 +4,59 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Two girls One Globe</title>
+    <title>Two Girls One Globe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/admin.css">
-    <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
 </head>
 
 <body>
-
+<section class="container">
 <!-- header -->
 <div th:replace="~{header :: header}">...</div>
 <!-- //header -->
 
-<section class="admin">
-    <div style="max-width:500px;">
+<section class="admin-dashboard">
+    <div class="dashboard-user">
         <h3 th:text="${'Welcome - ' + username}"></h3>
         <p class="" th:text="${'You logged in as - ' + roles}"></p>
     </div>
-    <div>
-        <a th:href="@{/displayMessages/page/1?sortField=name&sortDir=desc}">
-            <div>
+    <div class="admin-dashboard__list">
+        <div class="admin-dashboard__item">
+            <a th:href="@{/displayMessages/page/1?sortField=name&sortDir=desc}">
                 <h3>Messages</h3>
-            </div>
-        </a>
-    </div>
+            </a>
+        </div>
 
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a th:href="@{/admin/user}">
-            <div>
-                <h3>User Registration</h3>
-            </div>
-        </a>
-    </div>
-
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a th:href="@{/admin/displayUsers/page/1?sortField=userId&sortDir=desc}">
-            <div>
+        <div class="admin-dashboard__item" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/admin/displayUsers/page/1?sortField=userId&sortDir=desc}">
                 <h3>Users</h3>
-            </div>
-        </a>
-    </div>
-    <div>
-        <a th:href="@{/displayProfile}">
-            <div>
-                <h3>Profile</h3>
-            </div>
-        </a>
-    </div>
-
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a th:href="@{/admin/displayTours/page/1?sortField=tourId&sortDir=desc}">
-            <div>
+            </a>
+        </div>
+        <div class="admin-dashboard__item" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/admin/displayTours/page/1?sortField=tourId&sortDir=desc}">
                 <h3>Tours</h3>
-            </div>
-        </a>
-    </div>
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a th:href="@{/admin/tour}">
-            <div>
-                <h3>Create Tour</h3>
-            </div>
-        </a>
-    </div>
+            </a>
+        </div>
+        <div class="admin-dashboard__item">
+            <a th:href="@{/admin/displayProfile}">
+                <h3>Profile</h3>
+            </a>
+        </div>
+        <div class="admin-dashboard__item">
+            <a th:href="@{/admin/displayReviews/page/1?sortField=reviewId&sortDir=desc}">
+                <h3>Testimonals</h3>
+            </a>
+        </div>
 
+    </div>
 
 
 </section>
-
-
 <!-- footer block -->
 <div th:replace="~{footer :: footer}">...</div>
 <!-- //footer block -->
+</section>
 </body>
 
 </html>

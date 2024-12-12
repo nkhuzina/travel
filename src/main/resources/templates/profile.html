@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Two Girls One Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/form.css">
+</head>
+
+<body>
+
+<section class="container">
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
+
+    <section class="user-container">
+        <h2>Complete user form </h2>
+        <ul>
+            <li class="alert" role="alert" th:each="error : ${#fields.errors('profile.*')}" th:text="${error}"></li>
+        </ul>
+        <form action="#" th:action="@{/admin/updateProfile}" method="post" class="user-form" th:object="${profile}">
+            <table class="user-form-table">
+                <tr>
+                    <td class="user-form-table-label"><label for="name">Name</label></td>
+                    <td><input type="text" id="name" th:field="*{name}" placeholder="User name" required></td>
+
+                    <td class="user-form-table-label"><label for="mobileNumber">Phone Number</label></td>
+                    <td><input type="tel" id="mobileNumber" th:field="*{mobileNumber}" placeholder="User phone number" required></td>
+                </tr>
+                <tr>
+                    <td class="user-form-table-label"><label for="pwd">Password</label></td>
+                    <td><input type="password" id="pwd" th:field="*{pwd}" placeholder="Password" required></td>
+
+                    <td class="user-form-table-label"><label for="confirmPwd">Confirm Password</label></td>
+                    <td><input type="password" id="confirmPwd" th:field="*{confirmPwd}" placeholder="Confirm Password" required></td>
+                </tr>
+            </table>
+
+            <div class="user-form-btn">
+                <button  type="submit">Save</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- footer block -->
+    <div th:replace="~{footer :: footer}">...</div>
+    <!-- //footer block -->
+</section>
+</body>
+
+</html>

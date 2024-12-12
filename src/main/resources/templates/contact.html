@@ -3,26 +3,23 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Two girls One Globe</title>
+    <title>Two Girls One Globe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/form.css">
-    <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
 </head>
 
 <body>
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <script type="assets/text/javascript" src="assets/js/main.js"></script>
     <!-- header -->
     <div th:replace="~{header :: header}">...</div>
     <!-- //header -->
 
     <section class="contact-us">
         <h2>Complete the form and we contact you</h2>
-        <form action="/saveMsg" method="post" class="contact-form" th:object="${contact}">
+        <ul>
+            <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('contact.*')}" th:text="${error}" />
+        </ul>
+        <form action="#" th:action="@{/saveMsg}" method="post" class="contact-form" th:object="${contact}">
              
             <label>Name</label>
             <input type="text" th:field="*{name}" placeholder="Your name" required>

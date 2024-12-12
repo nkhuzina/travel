@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Two Girls One Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/form.css">
+</head>
+
+<body>
+
+<script type="/assets/text/javascript" src="assets/js/main.js"></script>
+
+<section class="container">
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
+
+    <section class="tour-container">
+        <h2>Complete Tour form </h2>
+        <form action="#" th:action="@{/admin/saveTour}" method="post" class="tour-form" enctype="multipart/form-data" th:object="${tour}">
+            <table class="tour-form-table">
+                <tr>
+                    <td class="tour-form-table-label"><label for="name">Name</label></td>
+                    <td ><input type="text" id="name" th:field="*{name}" placeholder="Tour name" required></td>
+                </tr>
+                <tr>
+                    <td class="tour-form-table-label"><label for="name">Begin Date</label></td>
+                    <td><input type="date" th:field="*{beginDate}" required></td>
+                </tr>
+                <tr>
+                    <td class="tour-form-table-label"><label for="name">End Date</label></td>
+                    <td><input type="date" th:field="*{endDate}"   required></td>
+                </tr>
+                <tr>
+                    <td class="tour-form-table-label"><label for="name">Fees</label></td>
+                    <td><input type="text" th:field="*{fees}" placeholder="Fees" required/></td>
+                </tr>
+                <tr>
+                    <td class="tour-form-table-label"><label for="name">Image</label></td>
+                    <td>
+                        <input type="file" accept="image/*" name="image" placeholder="Upload Image" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tour-form-table-label"><label for="name">Show on Home</label></td>
+                    <td><input type="checkbox" th:field="*{show}"></td>
+                </tr>
+                <tr>
+                    <td class="tour-form-table-label"><label for="name">Type</label></td>
+                    <td>
+                        <select th:field="*{type}">
+                            <option th:value="'REGULAR'" th:text="REGULAR" selected></option>
+                            <option th:value="'CUSTOM'" th:text="CUSTOM"></option>
+                            <option th:value="'VIP'" th:text="VIP"></option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div class="tour-form-btn">
+                <button  type="submit">Save</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- footer block -->
+    <div th:replace="~{footer :: footer}">...</div>
+    <!-- //footer block -->
+</section>
+</body>
+
+</html>

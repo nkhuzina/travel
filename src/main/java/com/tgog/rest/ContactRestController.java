@@ -1,64 +1,65 @@
 package com.tgog.rest;
 
+import com.tgog.constants.ApplicationStatus;
 import com.tgog.model.Contact;
+import com.tgog.model.Response;
+import com.tgog.repository.ContactRepository;
 import com.tgog.service.ContactService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "/api/contact",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-public class ContactController {
-
-    private final ContactService contactService;
+@RequestMapping(path = "/api/contact", produces = {MediaType.APPLICATION_JSON_VALUE})
+@CrossOrigin(origins="*")
+public class ContactRestController {
 
     @Autowired
-    public ContactController(ContactService service) {
-        this.contactService = service;
+    ContactRepository contactRepository;
+
+    @Autowired
+    ContactService contactService;
+
+
+    @PostMapping("/saveMsg")
+    public Contact saveMsg(@Valid @RequestBody Contact contact){
+        return contactService.saveMsgDetails(contact);
     }
 
-    @RequestMapping("/contact")
-    public String displayContactPage(Model model) {
-        model.addAttribute("contact", new Contact());
-        return "contact.html";
+    @GetMapping("/getMessagesByStatus")
+    public List<Contact> getMessagesByStatus(@RequestParam(name = "status")  String status){
+        return contactRepository.findByStatus(status);
     }
 
-    @RequestMapping(value ="/saveMsg", method=POST)
-    public String saveMsg(@Valid @ModelAttribute("contact") Contact contact, Errors errors){
-        if (errors.hasErrors()){
-            log.error("Validation failed due to: " + errors.toString());
-            return "contact.html";
+    @PatchMapping("/closeMsg")
+    public ResponseEntity<Response> closeMsg(@RequestBody Contact contactReq){
+        Response response = new Response();
+        Optional<Contact> contact = contactRepository.findById(contactReq.getContactId());
+        if(contact.isPresent()){
+            contact.get().setStatus(ApplicationStatus.CLOSE);
+            contactRepository.save(contact.get());
+        }else{
+            response.setStatusCode("400");
+            response.setStatusMsg("Invalid Contact ID received");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(response);
         }
-        contactService.saveMsgDetails(contact);
-        return "redirect:/contact";
-    }
-
-    @RequestMapping("/displayMessages")
-    public ModelAndView displayMessages(Model model) {
-        List<Contact> contactMsgs = contactService.findMsgsWithOpenStatus();
-        ModelAndView modelAndView = new ModelAndView("messages.html");
-        modelAndView.addObject("contactMsgs",contactMsgs);
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/closeMsg",method = GET)
-    public String closeMsg(@RequestParam int id) {
-        contactService.updateMsgStatus(id);
-        return "redirect:/displayMessages";
+        response.setStatusCode("200");
+        response.setStatusMsg("Message successfully closed");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(response);
     }
 }
 

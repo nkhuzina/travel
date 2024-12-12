@@ -1,15 +1,28 @@
-.admin container{
-  height: 500px;
- }
-
-.admin table {
+admin-container {
+    min-height: 400px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+.admin.table.dataTable {
   border-collapse: collapse;
   width: 100%;
  }
 
+.admin thead {
+     padding-left: 30px;
+}
+
 .admin h3 {
-     color: #003b6f;
+     color: #003B6F;
      margin-bottom: 20px;
+     font-size: 20px;
+}
+
+.admin-caption {
+     color: #003B6F;
+     margin-bottom: 20px;
+     font-size: 20px;
  }
 
 .admin th, td {
@@ -45,3 +58,179 @@
   display: inline-block;
   font-size: 12px;
 }
+
+table.dataTable > thead > tr > th:not(.sorting_disabled),
+table.dataTable > thead > tr > td:not(.sorting_disabled) {
+  padding-right: 30px;
+}
+table.dataTable > thead .sorting,
+table.dataTable > thead .sorting_asc,
+table.dataTable > thead .sorting_desc,
+table.dataTable > thead .sorting_asc_disabled,
+table.dataTable > thead .sorting_desc_disabled {
+  cursor: pointer;
+  position: relative;
+}
+table.dataTable > thead .sorting:before, table.dataTable > thead .sorting:after,
+table.dataTable > thead .sorting_asc:before,
+table.dataTable > thead .sorting_asc:after,
+table.dataTable > thead .sorting_desc:before,
+table.dataTable > thead .sorting_desc:after,
+table.dataTable > thead .sorting_asc_disabled:before,
+table.dataTable > thead .sorting_asc_disabled:after,
+table.dataTable > thead .sorting_desc_disabled:before,
+table.dataTable > thead .sorting_desc_disabled:after {
+  position: absolute;
+  bottom: 0.5em;
+  display: block;
+  opacity: 0.3;
+}
+table.dataTable > thead .sorting:before,
+table.dataTable > thead .sorting_asc:before,
+table.dataTable > thead .sorting_desc:before,
+table.dataTable > thead .sorting_asc_disabled:before,
+table.dataTable > thead .sorting_desc_disabled:before {
+  right: 1em;
+  content: "↑";
+}
+table.dataTable > thead .sorting:after,
+table.dataTable > thead .sorting_asc:after,
+table.dataTable > thead .sorting_desc:after,
+table.dataTable > thead .sorting_asc_disabled:after,
+table.dataTable > thead .sorting_desc_disabled:after {
+  right: 0.5em;
+  content: "↓";
+}
+table.dataTable > thead .sorting_asc:before,
+table.dataTable > thead .sorting_desc:after {
+  opacity: 1;
+}
+table.dataTable > thead .sorting_asc_disabled:before,
+table.dataTable > thead .sorting_desc_disabled:after {
+  opacity: 0;
+}
+
+th > a {
+  color: #fff;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+th > a:hover {
+  color: #fbb034;
+  text-decoration: underline;
+}
+
+
+/* Pagination style */
+.pagination-style {
+  display: block;
+  text-align: center
+}
+
+.pagination-style ul li {
+  display: inline-block;
+}
+
+.pagination-style a {
+  display: inline-block;
+  color: #060606;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  font-weight: 600;
+}
+
+.pagination-style a span {
+  margin: 0;
+}
+
+.pagination-style a.active,
+.pagination-style a:hover {
+  background-color: #cfd4d6;
+  color: #fff;
+}
+
+.pagination-style .not-allowed:hover {
+  opacity: 1;
+  background: transparent;
+  color: #c3c2c2;
+}
+
+.admin-caption {
+    color: #003B6F;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.table-name {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.user-form-btn {
+    width: 180px;
+    height: 50px;
+    background-color: #003b6f;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
+
+.admin-dashboard {
+     margin: 0 auto;
+     width: 80%;
+     display: flex;
+     flex-direction: column;
+     justify-content:
+}
+.dashboard-user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.dashboard-user h3 {
+   font-size: 20px;
+}
+
+.admin-dashboard__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin-dashboard__item {
+    flex: 1 1 150px;
+    max-width: 200px;
+    text-align: center;
+    background-color: #003B6F;
+    color: #c3c2c2;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-dashboard__item h3 {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+

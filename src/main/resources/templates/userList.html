@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta charset="utf-8">
+    <title>Two Girls One Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
+</head>
+
+<body>
+    <section class="container">
+        <!-- header -->
+        <div th:replace="~{header :: header}">...</div>
+        <!-- //header -->
+
+
+        <section class="admin-container">
+            <div class="admin-caption">
+                <h3>Users</h3>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/admin/user}">
+                        <div class="user-form-btn">User Registration</div>
+                    </a>
+                </div>
+            </div>
+            <table class="admin table dataTable">
+                <thead>
+                <tr>
+                    <th class="sorting" scope="col">
+                        <a th:href="@{'/admin/displayUsers/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name</a>
+                    </th>
+                    <th class="sorting" scope="col">
+                        <a th:href="@{'/admin/displayUsers/page/' + ${currentPage} + '?sortField=mobileNumber&sortDir=' + ${reverseSortDir}}">Mobile Num</a>
+                    </th>
+                    <th class="sorting" scope="col">
+                        <a th:href="@{'/admin/displayUsers/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">Email</a>
+                    </th>
+                    <th class="sorting" scope="col">
+                        <a th:href="@{'/admin/displayUsers/page/' + ${currentPage} + '?sortField=subject&sortDir=' + ${reverseSortDir}}">Status</a>
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user: ${userList}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.mobileNumber}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.status}"></td>
+
+                    <td><a th:href="@{/admin/user/changeStatus(id=${user.userId})}">
+                        <span th:if="${user.status == 'ACTIVE'}">DEACTIVATE</span>
+                        <span th:unless="${user.status == 'ACTIVE'}">ACTIVATE</span>
+                    </a></td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+        <!-- pagination -->
+        <div class="pagination-style text-center">
+            <ul>
+                <li>
+                    <a th:if="${currentPage > 1}" th:href="@{'/admin/displayUsers/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                        <span>&laquo;</span>
+                    </a>
+                    <a th:unless="${currentPage > 1}" class="not-allowed" disabled="">
+                        <span>&laquo;</span>
+                    </a>
+                </li>
+                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <li>
+                    <a th:if="${currentPage != i}" th:href="@{'/admin/displayUsers/page/' + ${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                    <a class="active" th:unless="${currentPage != i}">[[${i}]]</a>
+                </li>
+                </span>
+                <li>
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/admin/displayUsers/page/' + ${currentPage + 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                        <span>&raquo;</span>
+                    </a>
+                    <a th:unless="${currentPage < totalPages}" class="not-allowed" disabled="">
+                        <span>&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- //pagination -->
+        <div class="text-center mt-5">
+            <a th:href="@{/dashboard}">
+                <button class="btn btn-style btn-style-3">BACK</button>
+            </a>
+        </div>
+
+
+        <!-- footer block -->
+        <div th:replace="~{footer :: footer}">...</div>
+        <!-- //footer block -->
+    </section>
+</body>
+
+</html>

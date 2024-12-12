@@ -2,12 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <title>Two girls one globe</title>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <title>Two Girls One Globe</title>
     <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
 </head>
 <body>
-    <script type="assets/text/javascript" src="assets/js/main.js"></script>
+<script type="text/javascript" src="assets/js/main.js"></script>
+<section class="container">
     <!-- header -->
     <div th:replace="~{header :: header}">...</div>
     <!-- //header -->
@@ -25,51 +26,32 @@
 
     <section class="tour-section">
         <h3 class="header-title">Group Tours</h3>
-        <div class="tours">
-            <div class="tour-card">
-                <img src="assets/images/1.png" alt="athena">
-                <h3>Athena</h3>
-                <p>Price: $700</p>
-                <p>Date: December 2025</p>
-            </div>
-            <div class="tour-card">
-                <img src="assets/images/2.png" alt="hera">
-                <h3>Hera</h3>
-                <p>Price: $700</p>
-                <p>Date: December 2025</p>
-            </div>
-            <div class="tour-card">
-                <img src="assets/images/3.png" alt="zeus">
-                <h3>Zeus</h3>
-                <p>Price: $700</p>
-                <p>Date: December 2025</p>
+        <div>
+            <div class="tours">
+                <div th:each="tour: ${REGULAR}" class="tour-card">
+                    <img th:src="${imagesBaseUrl+tour.imagePath}" alt="athena">
+                    <h3 th:text="${tour.name}"></h3>
+                    <p>Price: $<span th:text="${tour.fees}"></span></p>
+                    <p>Dates: <span th:text="${#temporals.format(tour.beginDate, 'MM/dd/yyyy')}"></span> -
+                        <span th:text="${#temporals.format(tour.endDate, 'MM/dd/yyyy')}"></span>
+                    </p>
+                </div>
             </div>
         </div>
 
-
         <h3 class="header-title">VIP tours</h3>
-        <div class="tours">
-            <div class="tour-card">
-                <img src="assets/images/4.png" alt="Тур 1">
-                <h3>Hera</h3>
-                <p>Price: $700</p>
-                <p>Date: December 2025</p>
-            </div>
-            <div class="tour-card">
-                <img src="assets/images/5.png" alt="Тур 1">
-                <h3>Hera</h3>
-                <p>Price: $700</p>
-                <p>Date: December 2025</p>
-            </div>
-            <div class="tour-card">
-                <img src="assets/images/6.png" alt="Тур 1">
-                <h3>Hera</h3>
-                <p>Price: $700</p>
-                <p>Date: December 2025</p>
+        <div>
+            <div class="tours">
+                <div th:each="tour: ${VIP}" class="tour-card">
+                    <img th:src="${imagesBaseUrl+tour.imagePath}" alt="tour">
+                    <h3 th:text="${tour.name}"></h3>
+                    <p>Price: $<span th:text="${tour.fees}"></span></p>
+                    <p th:text="${tour.beginDate}"></p>
+                </div>
             </div>
         </div>
     </section>
- 
+
     <section class="custom-tour-section">
         <h3 class="header-title">Create your own Tour</h3>
         <div class="custom-tour-content">
@@ -82,25 +64,14 @@
     </section>
 
 
+
     <section class="reviews-section">
         <h3 class="header-title">Testimonials</h3>
         <div class="carousel">
             <div class="carousel-inner">
-                <div class="review-card active">
-                    <img src="assets/images/user1.jpg" alt="review 1">
-                    <p>Daria Traveling to the USA has been a dream of mine for a long time, and this April, it came true in such bright colors. The USA is not only skyscrapers and megacities. It is, first of all, incredible nature. Thank you, Maria and Lana, for showing us this place.</p>
-                </div>
-                <div class="review-card">
-                    <img src="assets/images/user2.jpg" alt="review 2">
-                    <p>Alex I have been traveling since 2012 when adventure and photo tourism began. I have gone through many experts on South and Central America and concluded that Itinero's expertise is top-notch. Trip to Peru and Ecuador have been amazing.</p>
-                </div>
-                <div class="review-card">
-                    <img src="assets/images/user3.jpg" alt="review 3">
-                    <p>Julia It was the best trip of the past year. Just recently, we celebrated life in this beautiful corner of our planet. Thank you, @itinerotravel, for the excellent arrangement of the tour and a lot of positive emotions. I want to believe that when all the current craziness is over, we'll be able to admire our beautiful world again.</p>
-                </div>
-                <div class="review-card">
-                    <img src="assets/images/anonymous.jpg" alt="review 3">
-                    <p>Marina We went to South Africa for New Year's Eve! What a country!!! We had a great time: wineries, safaris, ostriches, both alive and well-done, great hotels, and an absolutely fantastic group!</p>
+                <div th:each="testimonial: ${reviewList}" class="review-card">
+                    <p th:text="${testimonial.reviewText}"></p>
+                    <h3 th:text="${testimonial.name}"></h3>
                 </div>
             </div>
             <div class="dots">
@@ -116,7 +87,7 @@
     <!-- footer block -->
     <div th:replace="~{footer :: footer}">...</div>
     <!-- //footer block -->
-
+</section>
 
 
 </body>

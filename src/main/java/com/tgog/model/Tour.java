@@ -1,37 +1,46 @@
 package com.tgog.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Entity
 @Table(name="tours")
-public class Trip extends BaseEntity {
+@NamedQuery(name = "Tour.updateTourShow", query = "UPDATE Tour c SET c.show = ?1 WHERE c.tourId = ?2")
+public class Tour extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name="native", strategy ="native")
-    @Column(name = "trip_id")
-    private int tripId;
+    @Column(name = "tour_id")
+    private int tourId;
+
     @NotBlank(message="Name must not be blank")
     @Size(min=3, message="Name must be at least 3 characters long")
     private String name;
 
-    @NotBlank(message="Begin Date must not be blank")
-    private Date beginDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate beginDate;
 
-    @NotBlank(message="End Date must not be blank")
-    private Date endDate;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate endDate;
 
     @NotBlank(message="Fees must not be blank")
     private String fees;
 
-    private String image;
+    private String imagePath;
 
+    private Boolean show;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    public enum Type {
+        REGULAR, CUSTOM, VIP;
+    }
 }

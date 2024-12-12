@@ -1,57 +1,97 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
     <meta charset="utf-8">
     <title>Two Girls One Globe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/form.css">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
 
 <body>
-<div class="container">
+<section class="container">
     <!-- header -->
     <div th:replace="~{header :: header}">...</div>
     <!-- //header -->
 
-    <section class="testiminal-msg">
 
-        <div class="testiminal-msg-caption"><h2>Share Your Travel Experiences With Us!</h2></div>
-
-        <div class="testiminal-msg-img">
-            <img src="assets/images/review.jpg" alt="">
+    <section class="admin-container">
+        <div class="admin-caption">
+            <h3>Testimonials</h3>
         </div>
+        <table class="admin table dataTable">
+            <!--Table Header-->
+            <thead>
+            <tr>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/admin/displayReviews/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/admin/displayReviews/page/' + ${currentPage} + '?sortField=beginDate&sortDir=' + ${reverseSortDir}}">Review</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/admin/displayReviews/page/' + ${currentPage} + '?sortField=endDate&sortDir=' + ${reverseSortDir}}">Created At</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/admin/displayReviews/page/' + ${currentPage} + '?sortField=show&sortDir=' + ${reverseSortDir}}">Show on page</a>
+                </th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review: ${reviewList}">
+                <td th:text="${review.name}"></td>
+                <td th:text="${review.reviewText}"></td>
+                <td th:text="${review.createdAt}"></td>
+                <td>
+                    <span th:if="${review.show == true}">YES</span>
+                    <span th:unless="${review.show == true}">NO</span>
+                </td>
 
-        <div class="testiminal-msg-form">
-            <ul>
-                <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('review.*')}" th:text="${error}" />
-            </ul>
-            <form action="#" th:action="@{/saveReview}" method="post" class="review-form" th:object="${review}">
-                <div class="testiminal-msg-form__item">
-                    <input type="text" th:field="*{name}" placeholder="Your Name" required>
-                </div>
-                <div class="testiminal-msg-form__item">
-                    <textarea th:field="*{reviewText}" placeholder="Type Your Experience Here" rows="10" required></textarea>
-                </div>
-                <div class="testiminal-msg-form__item">
-                    <button type="submit">Send</button>
-                </div>
-            </form>
+                <td><a th:href="@{/admin/review/changeStatus(id=${review.reviewId})}">
+                    <span th:if="${review.show == true}">DISABLE</span>
+                    <span th:unless="${review.show == true}">ENABLE</span>
+                </a></td>
+            </tr>
+            </tbody>
+        </table>
         </div>
     </section>
-
-    <section class="testimonails">
-        <div th:each="testimonial: ${reviewList}" class="testimonial-card">
-            <p th:text="${testimonial.reviewText}"></p>
-            <h3 th:text="${testimonial.name}"></h3>
-        </div>
-    </section>
+    <!-- pagination -->
+    <div class="pagination-style text-center">
+        <ul>
+            <li>
+                <a th:if="${currentPage > 1}" th:href="@{'/admin/displayReviews/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                    <span>&laquo;</span>
+                </a>
+                <a th:unless="${currentPage > 1}" class="not-allowed" disabled="">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <li>
+                    <a th:if="${currentPage != i}" th:href="@{'/admin/displayReviews/page/' + ${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                    <a class="active" th:unless="${currentPage != i}">[[${i}]]</a>
+                </li>
+                </span>
+            <li>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/admin/displayReviews/page/' + ${currentPage + 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                    <span>&raquo;</span>
+                </a>
+                <a th:unless="${currentPage < totalPages}" class="not-allowed" disabled="">
+                    <span>&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- //pagination -->
 
     <!-- footer block -->
     <div th:replace="~{footer :: footer}">...</div>
     <!-- //footer block -->
-</div>
+</section>
 </body>
 
 </html>

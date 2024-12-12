@@ -1,6 +1,6 @@
 package com.tgog.annotation;
 
-import com.eazybytes.eazyschool.validations.FieldsValueMatchValidator;
+import com.tgog.validations.FieldsValueMatchValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

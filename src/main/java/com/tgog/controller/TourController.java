@@ -1,7 +1,9 @@
 package com.tgog.controller;
 
-import com.tgog.model.User;
-import com.tgog.service.UserService;
+import com.tgog.config.AppProporties;
+import com.tgog.config.S3Properties;
+import com.tgog.model.Tour;
+import com.tgog.service.TourService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,59 +12,107 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+
 @Slf4j
 @Controller
-public class ImageController {
-
+public class TourController {
 
     @Autowired
     TourService tourService;
 
+    @Autowired
+    AppProporties appProporties;
+
+    @Autowired
+    S3Properties s3Properties;
+
     @GetMapping("/admin/tour")
-    public String displayUserPage(Model model) {
-        model.addAttribute("tour", new User());
+    public String displayTourPage(Model model) {
+        model.addAttribute("tour", new Tour());
         return "tour.html";
     }
 
+
     @RequestMapping(value = "/admin/saveTour", method = POST)
-    public String saveUser(@Valid @ModelAttribute("user") User user, Errors errors) {
+    public String saveTour(@Valid @ModelAttribute("tour") Tour tour,
+                           @RequestParam("image") MultipartFile file, Errors errors) throws IOException {
         if(errors.hasErrors()){
             log.error("Tour form validation failed due to : " + errors.toString());
-            return "user.html";
+            return "tour.html";
         }
-        tourService.createNewUser(user);
-        return "redirect:/admin/displayTours/page/1?sortField=userId&sortDir=desc";
+//        StringBuilder fileNames = new StringBuilder();
+//        Path fileNameAndPath = Paths.get(appProporties.getUploadDirectory(), file.getOriginalFilename());
+//        fileNames.append(file.getOriginalFilename());
+//        Files.write(fileNameAndPath, file.getBytes());
+//        tour.setImagePath(Paths.get(appProporties.getPathDirectory(), file.getOriginalFilename()).toString());
+        uploadFileTos3bucket(file);
+        tour.setImagePath(Paths.get(file.getOriginalFilename()).toString());
+        tourService.createNewTour(tour);
+        return "redirect:/admin/displayTours/page/1?sortField=tourId&sortDir=desc";
+    }
+
+
+    private void uploadFileTos3bucket(MultipartFile file) throws IOException {
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(s3Properties.getAccessKey(),
+                s3Properties.getSecretKey());
+        try (S3Client s3Client = S3Client.builder()
+                .region(Region.US_EAST_1)
+                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                .build()) {
+            PutObjectRequest putRequest = PutObjectRequest.builder()
+                    .bucket(s3Properties.getBucketName())
+                    .key( file.getOriginalFilename())
+                    .build();
+            s3Client.putObject(putRequest,
+                    RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+        }
     }
 
     @RequestMapping("/admin/displayTours/page/{pageNum}")
-    public ModelAndView displayMessages(Model model,
+    public ModelAndView displayTours(Model model,
                                         @PathVariable(name = "pageNum") int pageNum,
                                         @RequestParam("sortField") String sortField,
                                         @RequestParam("sortDir") String sortDir) {
-        Page<User> page = tourService.findAllUsers(pageNum,sortField,sortDir);
-        List<User> userList = page.getContent();
-        ModelAndView modelAndView = new ModelAndView("userList.html");
+        Page<Tour> page = tourService.findAllTours(pageNum,sortField,sortDir);
+        List<Tour> tourList = page.getContent();
+        System.out.println("tourList = " + tourList.stream().count());
+        ModelAndView modelAndView = new ModelAndView("tourList.html");
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalMsgs", page.getTotalElements());
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-        modelAndView.addObject("userList",userList);
+        modelAndView.addObject("tourList",tourList);
         return modelAndView;
     }
 
-//    @RequestMapping(value = "/admin/changeStatus", method = GET)
-//    public String changeStatus(@RequestParam int id) {
-//        tourService.updateUserStatus(id);
-//        return "redirect:/admin/displayTours/page/1?sortField=userId&sortDir=desc";
+
+//@RequestMapping(value = "admin/tourEdit", method = GET)
+//    public String editTourPage(Model model) {
+//        model.addAttribute("tour", new Tour());
+//        return "tour.html";
 //    }
+    @RequestMapping(value = "/admin/tour/changeStatus", method = GET)
+    public String changeTourStatus(@RequestParam int id) {
+        tourService.updateShowOnPageStatus(id);
+        return "redirect:/admin/displayTours/page/1?sortField=tourId&sortDir=desc";
+    }
 
 }

@@ -4,58 +4,94 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Two girls One Globe</title>
+    <title>Two Girls One Globe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/admin.css">
-    <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
 
 <body>
+<section class="container">
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
 
-<!-- header -->
-<div th:replace="~{header :: header}">...</div>
-<!-- //header -->
-
-
-<section class="admin section">
-        <div class="col-md-7">
-            <h3>Messages</h3>
+    <section class="admin-container">
+        <div>
+            <h3 class="admin-caption">Messages</h3>
         </div>
-        <table class="admin table">
+        <table class="admin table dataTable">
+            <!--Table Header-->
             <thead>
-            <tr class="admin">
-                <th scope="col">Name</th>
-                <th scope="col">Mobile Num</th>
-                <th scope="col">Email</th>
-                <th scope="col">Subject</th>
-                <th scope="col">Message</th>
+            <tr>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=mobileNum&sortDir=' + ${reverseSortDir}}">Mobile Num</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">Email</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=subject&sortDir=' + ${reverseSortDir}}">Subject</a>
+                </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=message&sortDir=' + ${reverseSortDir}}">Message</a>
+                </th>
                 <th scope="col"></th>
             </tr>
             </thead>
+
+            <!--Table Data-->
             <tbody>
-            <tr th:each="msg: ${contactMsgs}">
+            <tr class="admin" th:each="msg: ${contactMsgs}">
                 <td th:text="${msg.name}"></td>
                 <td th:text="${msg.mobileNum}"></td>
                 <td th:text="${msg.email}"></td>
                 <td th:text="${msg.subject}"></td>
                 <td th:text="${msg.message}"></td>
-                <td><a th:href="@{/closeMsg(id=${msg.contactId})}" class="btn">CLOSE</a></td>
+                <td><a th:href="@{/closeMsg(id=${msg.contactId})}" class="btn btn-warning">CLOSE</a></td>
             </tr>
             </tbody>
         </table>
-    <div>
-        <a th:href="@{/adminConsole}">
-        <button>BACK</button>
-        </a>
+        </div>
+    </section>
+    <!--Pagination-->
+    <div class="pagination-style text-center">
+        <ul>
+            <!-- Arrow left -->
+            <li>
+                <a th:if="${currentPage > 1}" th:href="@{'/displayMessages/page/' + ${currentPage - 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                    <span>&laquo;</span>
+                </a>
+                <a th:unless="${currentPage > 1}" class="not-allowed" disabled="">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+            <!-- Page numbers -->
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                <li>
+                    <a th:if="${currentPage != i}" th:href="@{'/displayMessages/page/' + ${i}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                    <a class="active" th:unless="${currentPage != i}">[[${i}]]</a>
+                </li>
+            </span>
+            <!-- Arrow right -->
+            <li>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/displayMessages/page/' + ${currentPage + 1}+'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                    <span>&raquo;</span>
+                </a>
+                <a th:unless="${currentPage < totalPages}" class="not-allowed" disabled="">
+                    <span>&raquo;</span>
+                </a>
+            </li>
+        </ul>
     </div>
+
+    <!-- footer block -->
+    <div th:replace="~{footer :: footer}">...</div>
+    <!-- //footer block -->
 </section>
-
-<!-- footer block -->
-<div th:replace="~{footer :: footer}">...</div>
-<!-- //footer block -->
-
 </body>
 
 </html>

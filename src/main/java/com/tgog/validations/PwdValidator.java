@@ -1,19 +1,19 @@
 package com.tgog.validations;
 
-import com.eazybytes.eazyschool.annotation.PasswordValidator;
+
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class PasswordStrengthValidator implements
-        ConstraintValidator<PasswordValidator, String> {
+public class PwdValidator implements
+        ConstraintValidator<com.tgog.annotation.PasswordValidator, String> {
 
     List<String> weakPasswords;
 
     @Override
-    public void initialize(PasswordValidator passwordValidator) {
+    public void initialize(com.tgog.annotation.PasswordValidator passwordValidator) {
         weakPasswords = Arrays.asList("12345", "password", "qwerty");
     }
 

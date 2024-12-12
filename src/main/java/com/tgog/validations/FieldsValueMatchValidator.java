@@ -1,6 +1,7 @@
 package com.tgog.validations;
 
-import com.eazybytes.eazyschool.annotation.FieldsValueMatch;
+
+import com.tgog.annotation.FieldsValueMatch;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapperImpl;

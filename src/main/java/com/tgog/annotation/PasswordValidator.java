@@ -1,13 +1,14 @@
 package com.tgog.annotation;
 
-import com.eazybytes.eazyschool.validations.PasswordStrengthValidator;
+
+import com.tgog.validations.PwdValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = PasswordStrengthValidator.class)
+@Constraint(validatedBy = PwdValidator.class)
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordValidator {

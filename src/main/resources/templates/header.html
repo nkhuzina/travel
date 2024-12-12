@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+        <section class="header">
+            <div class="logo">
+                <img src="/assets/images/logoWord2.jpg" width="200px" height="60px">
+            </div>
+            <nav class="menu">
+                <ul class="navigator">
+                    <li sec:authorize="isAnonymous()"> <a th:href="@{/home}">Home</a> </li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/groupTour}">Group Tours</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/vipTour}">VIP Tours</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/displayReviews}">Testimonials</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/aboutUs}">About us</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/contact}">Contact us</a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/dashboard}">Dashboard</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </nav>
+
+        </section>
+    </header>
+    <!-- header -->
+</body>
+</html>
