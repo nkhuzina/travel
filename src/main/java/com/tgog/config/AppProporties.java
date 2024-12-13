@@ -19,7 +19,7 @@ public class AppProporties {
     @Max(value=25, message="must be between 5 and 25")
     private int pageSize;
 
-    private String uploadDirectory = "./src/main/resources/static/assets/uimages/";
-    private String pathDirectory = "assets/uimages/";
+//    private String uploadDirectory = "./src/main/resources/static/assets/uimages/";
+//    private String pathDirectory = "assets/uimages/";
 
 }

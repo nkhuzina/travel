@@ -1,5 +1,6 @@
 package com.tgog.controller;
 
+import com.tgog.constants.ApplicationType;
 import com.tgog.model.Contact;
 import com.tgog.service.ContactService;
 import jakarta.validation.Valid;
@@ -36,9 +37,12 @@ public class ContactController {
             log.error("Contact form validation failed due to : " + errors.toString());
             return "contact.html";
         }
+        contact.setType(ApplicationType.CONTACT);
         contactService.saveMsgDetails(contact);
         return "redirect:/contact";
     }
+
+
 
     @RequestMapping("/displayMessages/page/{pageNum}")
     public ModelAndView displayMessages(Model model,
@@ -57,15 +61,6 @@ public class ContactController {
         modelAndView.addObject("contactMsgs",contactMsgs);
         return modelAndView;
     }
-
-//    @RequestMapping("/displayMessages")
-//    public ModelAndView displayMessages(Model model) {
-//        List<Contact> contactMsgs = contactService.findMsgsWithOpenStatus();
-//
-//        ModelAndView modelAndView = new ModelAndView("messages.html");
-//        modelAndView.addObject("contactMsgs",contactMsgs);
-//        return modelAndView;
-//    }
 
     @RequestMapping(value = "/closeMsg", method = GET)
     public String closeMsg(@RequestParam int id) {

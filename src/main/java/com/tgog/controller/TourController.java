@@ -2,7 +2,10 @@ package com.tgog.controller;
 
 import com.tgog.config.AppProporties;
 import com.tgog.config.S3Properties;
+import com.tgog.constants.ApplicationType;
+import com.tgog.model.Contact;
 import com.tgog.model.Tour;
+import com.tgog.service.ContactService;
 import com.tgog.service.TourService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +45,37 @@ public class TourController {
     @Autowired
     S3Properties s3Properties;
 
+    @Autowired
+    ContactService contactService;
+
     @GetMapping("/admin/tour")
     public String displayTourPage(Model model) {
         model.addAttribute("tour", new Tour());
         return "tour.html";
+    }
+
+    @GetMapping("/tour")
+    public String displayTour(Model model,
+                              @RequestParam(name = "tourId") Integer tourId) {
+        model.addAttribute("tourId", tourId);
+        model.addAttribute("contact", new Contact());
+        return "tourPage.html";
+    }
+
+    @RequestMapping(value = "/joinTour", method = POST)
+    public String joinTour(@RequestParam(name = "tourId") Integer tourId,
+                           @Valid @ModelAttribute("contact") Contact contact,
+                           Errors errors,
+                           Model model) {
+        if(errors.hasErrors()){
+            log.error("Tour form validation failed due to : " + errors.toString());
+            model.addAttribute("tourId", tourId);
+            return "tourPage.html";
+        }
+        contact.setType(ApplicationType.JOIN);
+        contact.setTourId(tourId);
+        contactService.saveMsgDetails(contact);
+        return "redirect:/tour?tourId="+tourId;
     }
 
 
@@ -56,11 +86,6 @@ public class TourController {
             log.error("Tour form validation failed due to : " + errors.toString());
             return "tour.html";
         }
-//        StringBuilder fileNames = new StringBuilder();
-//        Path fileNameAndPath = Paths.get(appProporties.getUploadDirectory(), file.getOriginalFilename());
-//        fileNames.append(file.getOriginalFilename());
-//        Files.write(fileNameAndPath, file.getBytes());
-//        tour.setImagePath(Paths.get(appProporties.getPathDirectory(), file.getOriginalFilename()).toString());
         uploadFileTos3bucket(file);
         tour.setImagePath(Paths.get(file.getOriginalFilename()).toString());
         tourService.createNewTour(tour);

@@ -40,5 +40,9 @@ public class Contact extends BaseEntity {
     @Size(min=10, message="Message must be at least 10 characters long")
     private String message;
 
+    private String type;
+
+    private Integer tourId;
+
     private String status;
 }

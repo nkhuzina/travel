@@ -35,6 +35,7 @@
                     <p>Dates: <span th:text="${#temporals.format(tour.beginDate, 'MM/dd/yyyy')}"></span> -
                         <span th:text="${#temporals.format(tour.endDate, 'MM/dd/yyyy')}"></span>
                     </p>
+                    <p><a th:href="@{/tour(tourId=${tour.tourId})}">View</a></p>
                 </div>
             </div>
         </div>

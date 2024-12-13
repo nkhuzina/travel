@@ -25,6 +25,8 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/review").permitAll()
                         .requestMatchers("/saveReview").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
+                        .requestMatchers("/tour").permitAll()
+                        .requestMatchers("/joinTour").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()

@@ -24,28 +24,18 @@
             <label>Name</label>
             <input type="text" th:field="*{name}" placeholder="Your name" required>
 
-            
             <label>Phone Number</label>
             <input type="tel" th:field="*{mobileNum}" placeholder="Your phone number" required>
 
-            
             <label>Email</label>
             <input type="email" th:field="*{email}"  placeholder="Your email" required>
 
-            
-<!--            <label>Preferable method of communication</label>-->
-<!--            <div class="checkbox-group">-->
-<!--                <label><input type="checkbox" name="communication" value="phone"> Phone</label>-->
-<!--                <label><input type="checkbox" name="communication" value="email"> Email</label>-->
-<!--                <label><input type="checkbox" name="communication" value="whatsapp"> WhatsApp</label>-->
-<!--            </div>-->
             <label>Subject</label>
             <input type="text" th:field="*{subject}" placeholder="Subject" required>
             
             <label>Message</label>
             <textarea th:field="*{message}" placeholder="Type Your Message Here" rows="4" required></textarea>
 
-            
             <button type="submit">Contact Me</button>
         </form>
     </section>
