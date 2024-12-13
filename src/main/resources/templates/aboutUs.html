@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
+    <title>Two Girls One Globe</title>
+</head>
+
+<body>
+    <!-- header -->
+    <div th:replace="~{header :: header}">...</div>
+    <!-- //header -->
+
+    <section class="about">
+        <div class="about-container">
+            <div class="about-images">
+                <img src="/assets/images/team1.jpg" alt="Team member 1">
+                <div class="about-team">Maria</div>
+                <img src="/assets/images/team2.jpg" alt="Team member 2">
+                <div class="about-team">Lana</div>
+            </div>
+            <div class="about-text">
+                <h2 class="header-title">About Us</h2>
+                <p>
+                    At Two Girls One Globe, we redefine travel by going beyond the usual and creating journeys that
+                    foster genuine connections with local cultures. Our adventures aren’t just about sightseeing—they’re
+                    about experiencing life as the locals do, building bonds that linger long after the trip ends.
+                </p>
+                <p>
+                    Our trips are thoughtfully crafted with joy, warmth, and meticulous care, ensuring a seamless blend
+                    of discovery and comfort. Whether you're exploring hidden gems or indulging in authentic culinary
+                    experiences, you’ll feel like part of a global family.
+                </p>
+                <p>
+                    Our focus is on crafting journeys that celebrate the richness of culture, history, and landscapes.
+                    Whether you’re visiting iconic landmarks, uncovering hidden treasures, or engaging with vibrant
+                    communities, we ensure every moment is personal and enriching. At Two Girls One Globe, our mission
+                    is to transform travel into a tapestry of lasting memories, offering you a deeper connection to the
+                    places you explore and the people you meet along the way.
+                </p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- footer block -->
+    <div th:replace="~{footer :: footer}">...</div>
+    <!-- //footer block -->
+</body>
+
+</html>

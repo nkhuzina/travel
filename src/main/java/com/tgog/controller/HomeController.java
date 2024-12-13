@@ -43,4 +43,10 @@ public class HomeController {
         model.addAttribute("imagesBaseUrl",s3Properties.getImagesBaseUrl());
         return "home.html";
     }
+
+    @RequestMapping(value={"/aboutUs"})
+    public String displayAboutUsPage(){
+        return "aboutUs.html";
+    }
+
 }

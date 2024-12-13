@@ -437,6 +437,60 @@ footer {
     padding-right: 40px;
 }
 
+.about {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: fill-available;
+            background-color: #f4f4f4;
+
+        }
+
+        .about-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            max-width: 1200px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .about-images {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+        }
+        .about-team {
+            padding: 5px;
+            font-size: 1.2em;
+            color: #003b6f;
+        }
+
+        .about-images img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .about-text {
+            flex: 2;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.6;
+            font-size: 1.2em;
+            color: #003b6f;
+        }
+
 @media (max-width: 768px) {
     .menu {
         flex-direction: column;
