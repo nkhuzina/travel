@@ -1,5 +1,6 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <script src='https://kit.fontawesome.com/6b277cc5b7.js' crossorigin='anonymous'></script>
 </head>
@@ -14,13 +15,15 @@
 
             <div class="footer-center">
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">Group Tours</a></li>
-                    <li><a href="#tours">VIP Tours</a></li>
-                    <li><a href="#services">Testimonials</a></li>
-                    <li><a href="#payments">Payments</a></li>
-                    <li><a href="#about-us">About us</a></li>
-                    <li><a href="#contact-us">Contact us</a></li>
+                    <li sec:authorize="isAnonymous()"> <a th:href="@{/home}">Home</a> </li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/groupTour}">Group Tours</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/vipTour}">VIP Tours</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/displayReviews}">Testimonials</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/aboutUs}">About us</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/contact}">Contact us</a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/dashboard}">Dashboard</a></li>
+                    <li sec:authorize="isAnonymous()"><a th:href="@{/login}">Login</a></li>
+                    <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
                 </ul>
             </div>
 
