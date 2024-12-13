@@ -35,7 +35,7 @@
                     <p>Dates: <span th:text="${#temporals.format(tour.beginDate, 'MM/dd/yyyy')}"></span> -
                         <span th:text="${#temporals.format(tour.endDate, 'MM/dd/yyyy')}"></span>
                     </p>
-                    <p><a th:href="@{/tour(tourId=${tour.tourId})}">View</a></p>
+                    <p style="text-align:center"><a style="color:#003b6f; font-weight:bold;" th:href="@{/tour(tourId=${tour.tourId})}">View</a></p>
                 </div>
             </div>
         </div>
@@ -71,8 +71,8 @@
         <div class="carousel">
             <div class="carousel-inner">
                 <div th:each="testimonial: ${reviewList}" class="review-card">
-                    <p th:text="${testimonial.reviewText}"></p>
                     <h3 th:text="${testimonial.name}"></h3>
+                    <p th:text="${testimonial.reviewText}"></p>
                 </div>
             </div>
             <div class="dots">

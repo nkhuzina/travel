@@ -116,7 +116,6 @@ public class TourController {
                                         @RequestParam("sortDir") String sortDir) {
         Page<Tour> page = tourService.findAllTours(pageNum,sortField,sortDir);
         List<Tour> tourList = page.getContent();
-        System.out.println("tourList = " + tourList.stream().count());
         ModelAndView modelAndView = new ModelAndView("tourList.html");
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("totalPages", page.getTotalPages());

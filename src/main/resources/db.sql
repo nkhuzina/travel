@@ -45,13 +45,15 @@ CREATE TABLE public.tours (
 COMMENT ON TABLE public.tours IS 'List of tours';
 
 CREATE TABLE public.contact_msg (
-	contact_id serial4 NOT NULL,
+	contact_id numeric NOT NULL,
 	"name" varchar(100) NOT NULL,
 	mobile_num varchar(10) NOT NULL,
 	email varchar(100) NOT NULL,
 	subject varchar(100) NOT NULL,
 	message varchar(500) NOT NULL,
 	status varchar(10) NOT NULL,
+	type varchar(500) NOT NULL,
+    tour_id numeric(10) NULL,
 	created_at date NOT NULL,
 	created_by varchar(50) NOT NULL,
 	updated_at date NULL,
@@ -59,10 +61,12 @@ CREATE TABLE public.contact_msg (
 	CONSTRAINT contact_msg_pk PRIMARY KEY (contact_id)
 );
 
+ALTER TABLE public.contact_msg ADD CONSTRAINT contact_msg_fk FOREIGN KEY (tour_id) REFERENCES public.tours(tour_id);
+
 INSERT INTO public.users (user_id,"name",email,mobile_number,pwd,"role",status,created_at,created_by,updated_at,updated_by) VALUES
 	 (1,'admin','admin@gmail.com','9992345678','$2a$12$ksqu0CLAqzRLvyv3Y/5.eeCl3Gf5Geq19W3ef03kNmDobJyULuJ/C','ADMIN','Active','2024-11-23 22:33:39.531','Admin','2024-11-23 22:33:39.531','Admin');
 
 INSERT INTO public.users (user_id,"name",email,mobile_number,pwd,"role",status,created_at,created_by,updated_at,updated_by) VALUES
-	 (2,'anonymous','anonymous@gmail.com','9992345678','$2a$12$ksqu0CLAqzRLvyv3Y/5.eeCl3Gf5Geq19W3ef03kNmDobJyULuJ/C','Anonymous','Active','2024-11-23 22:33:39.531','Admin','2024-11-23 22:33:39.531','Admin');
+	 (2,'anonymous','anonymous@gmail.com','9992345678','$2a$12$ksqu0CLAqzRLvyv3Y/5.eeCl3Gf5Geq19W3ef03kNmDobJyULuJ/C','ANONYMOUS','Active','2024-11-23 22:33:39.531','Admin','2024-11-23 22:33:39.531','Admin');
 
 

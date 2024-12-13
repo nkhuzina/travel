@@ -31,6 +31,9 @@
                 <thead>
                 <tr>
                     <th class="sorting" scope="col">
+                        <a th:href="@{'/admin/displayTours/page/' + ${currentPage} + '?sortField=tourId&sortDir=' + ${reverseSortDir}}">Id</a>
+                    </th>
+                    <th class="sorting" scope="col">
                         <a th:href="@{'/admin/displayTours/page/' + ${currentPage} + '?sortField=name&sortDir=' + ${reverseSortDir}}">Name</a>
                     </th>
                     <th class="sorting" scope="col">
@@ -50,15 +53,19 @@
                 </thead>
                 <tbody>
                 <tr th:each="tour: ${tourList}">
+                    <td th:text="${tour.tourId}"></td>
                     <td th:text="${tour.name}"></td>
                     <td th:text="${tour.beginDate}"></td>
                     <td th:text="${tour.endDate}"></td>
                     <td th:text="${tour.fees}"></td>
-                    <td th:checked="${tour.show}"></td>
+                    <td>
+                        <span th:if="${tour.show == true}">YES</span>
+                        <span th:unless="${tour.show == true}">NO</span>
+                    </td>
 
                     <td><a th:href="@{/admin/tour/changeStatus(id=${tour.tourId})}">
-                        <span th:if="${tour.show == 'true'}">DISABLE</span>
-                        <span th:unless="${tour.show == 'true'}">ENABLE</span>
+                        <span th:if="${tour.show == true}">DISABLE</span>
+                        <span th:unless="${tour.show == true}">ENABLE</span>
                     </a></td>
                 </tr>
                 </tbody>

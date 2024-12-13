@@ -42,6 +42,9 @@
                 <th class="sorting" scope="col">
                     <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=type&sortDir=' + ${reverseSortDir}}">Type</a>
                 </th>
+                <th class="sorting" scope="col">
+                    <a th:href="@{'/displayMessages/page/' + ${currentPage} + '?sortField=tourId&sortDir=' + ${reverseSortDir}}">TourId</a>
+                </th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -55,6 +58,7 @@
                 <td th:text="${msg.subject}"></td>
                 <td th:text="${msg.message}"></td>
                 <td th:text="${msg.type}"></td>
+                <td th:text="${msg.tourId}"></td>
                 <td><a th:href="@{/closeMsg(id=${msg.contactId})}" class="btn btn-warning">CLOSE</a></td>
             </tr>
             </tbody>

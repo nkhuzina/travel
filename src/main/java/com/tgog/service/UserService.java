@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -48,7 +49,10 @@ public class UserService {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending()
                         : Sort.by(sortField).descending());
-        Page<User> page = userRepository.findByRoleNotLike(Roles.ROLE_ADMIN, pageable);
+        Page<User> page = userRepository.findByRoleNotInCustom(
+                List.of(Roles.ROLE_ADMIN, Roles.ANONYMOUS),
+                pageable
+        );
         return page;
     }
 

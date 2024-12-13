@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Two Girls One Globe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/form.css">
+    <link rel="stylesheet" href="/assets/css/page.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- header -->
+        <div th:replace="~{header :: header}">...</div>
+        <!-- //header -->
+
+        <section class="tour-section">
+            <h2>Niagara Falls 2 days trip from NYC</h2>
+            <p>Price: $700</p>
+            <p>Date: December 2025</p>
+            <a href="#joinTour"><button>Join tour</button></a>
+
+
+            <section class="block block2">
+                <div class="description">
+                    <h3>Driving Tour Plan: NYC to Niagara Falls (2 Days, 1 Night)</h3>
+                    <p>
+                    <h4>Day 1: NYC to Niagara Falls</h4>
+                    <div style="white-space: pre-wrap;">
+                        **Depart NYC:**
+                        - Begin your adventure with excitement as you drive toward Niagara Falls.
+                        **Lunch Stop:**
+                        - Enjoy a relaxing lunch in Erie, PA, soaking in local flavors.
+                        **Niagara Falls Exploration:**
+                        - Arrive at Niagara Falls State Park. Experience breathtaking views of American Falls and Bridal
+                        Veil Falls while taking a scenic walk along the pathways.
+                        **Evening Activities:**
+                        - Check into an Airbnb house for a cozy and unique stay.
+                        - Enjoy a warm BBQ homemade dinner at your Airbnb, perfect for winding down after a day of
+                        exploration.</div>
+                    </p>
+                    <p>
+                    <h4>#### Day 2: Discover Niagara Falls</h4>
+                    <div style="white-space: pre-wrap;">
+                        **Morning Adventures:**
+                        - Start your day with breakfast in your Airbnb.
+                        - Take the thrilling **Maid of the Mist** boat ride, getting up close to the falls and feeling the
+                        mist on your face.
+                        **Cave of the Winds:**
+                        - Experience the Cave of the Winds, standing just feet away from the thundering water.
+                        **Lunch with a View:**
+                        - Enjoy a meal at a restaurant with stunning views of the falls.
+                        **Afternoon Discoveries:**
+                        - Visit the observation tower for panoramic views, then stroll across the Rainbow Bridge for a
+                        unique perspective of the falls.
+                        **Return to NYC:**
+                        - Head back, reflecting on the memories created during your journey.</div>
+                    </p>
+                </div>
+                <div class="gallery">
+                    <img src="/assets/images/nf/1.jpg" alt="Photo 1">
+                    <img src="/assets/images/nf/5.jpg" alt="Photo 5">
+                    <img src="/assets/images/nf/6.jpg" alt="Photo 6">
+                </div>
+            </section>
+            <section>
+                <h3>Additional Information</h3>
+                <ul>
+                    <li>Text</li>
+                    <li>Text</li>
+                    <li>Text</li>
+                </ul>
+                <h3>What tour include</h3>
+                <ul>
+                    <li>Text</li>
+                    <li>Text</li>
+                    <li>Text</li>
+                </ul>
+                <h3>What tour do not include</h3>
+                <ul>
+                    <li>Text</li>
+                    <li>Text</li>
+                    <li>Text</li>
+                </ul>
+            </section>
+        </section>
+
+        <section class="contact-us" id="joinTour">
+            <h2>Join The Tour</h2>
+            <h5>Complete the form and we contact you</h5>
+            <ul>
+                <li class="alert alert-danger" role="alert" th:each="error : ${#fields.errors('contact.*')}" th:text="${error}" />
+            </ul>
+            <form class="contact-form" th:action="@{/joinTour(tourId=${tourId})}" method="post" th:object="${contact}">
+                <div class="contact-join-form-row"> <label for="name">Name</label>
+                    <input type="text" th:field="*{name}" id="name" name="name" placeholder="Your name" required>
+                </div>
+                <div class="contact-join-form-row"> <label for="phone">Phone Number</label>
+                    <input type="tel" th:field="*{mobileNum}" id="phone" name="phone" placeholder="Your phone number" required>
+                </div>
+                <div class="contact-join-form-row"><label for="email">Email</label>
+                    <input type="email" th:field="*{email}"  id="email" name="email" placeholder="Your email" required>
+                </div>
+
+                <div class="contact-join-form-row"><label for="subject">Subject</label>
+                    <input type="text" th:field="*{subject}" id="subject" placeholder="Subject"
+                           th:value="${tourId}">
+                </div>
+<!--                <div class="contact-join-form-row"><label>Preferable method of communication</label>-->
+<!--                    <div class="checkbox-group">-->
+<!--                        <input type="checkbox" name="communication" value="phone"> Phone-->
+<!--                        <input type="checkbox" name="communication" value="email"> Email-->
+<!--                        <input type="checkbox" name="communication" value="whatsapp"> WhatsApp-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="contact-join-form-row">
+                    <label for="message">Message</label>
+                    <textarea th:field="*{message}" id="message" name="message" placeholder="Your message" rows="4" required></textarea>
+                </div>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+
+        <!-- footer block -->
+        <div th:replace="~{footer :: footer}">...</div>
+        <!-- //footer block -->
+
+        <script>
+            document.querySelectorAll('.gallery img').forEach(img => {
+                img.addEventListener('click', () => {
+                    const viewer = document.createElement('div');
+                    viewer.style.position = 'fixed';
+                    viewer.style.top = 0;
+                    viewer.style.left = 0;
+                    viewer.style.width = '100%';
+                    viewer.style.height = '100%';
+                    viewer.style.background = 'rgba(0, 0, 0, 0.8)';
+                    viewer.style.display = 'flex';
+                    viewer.style.alignItems = 'center';
+                    viewer.style.justifyContent = 'center';
+                    viewer.style.zIndex = 1000;
+
+                    const imgClone = document.createElement('img');
+                    imgClone.src = img.src;
+                    imgClone.style.maxWidth = '90%';
+                    imgClone.style.maxHeight = '90%';
+                    viewer.appendChild(imgClone);
+
+                    viewer.addEventListener('click', () => {
+                        viewer.remove();
+                    });
+
+                    document.body.appendChild(viewer);
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
