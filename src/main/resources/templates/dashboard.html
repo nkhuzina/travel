@@ -22,12 +22,6 @@
         <p class="" th:text="${'You logged in as - ' + roles}"></p>
     </div>
     <div class="admin-dashboard__list">
-        <div class="admin-dashboard__item">
-            <a th:href="@{/displayMessages/page/1?sortField=name&sortDir=desc}">
-                <h3>Messages</h3>
-            </a>
-        </div>
-
         <div class="admin-dashboard__item" sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/admin/displayUsers/page/1?sortField=userId&sortDir=desc}">
                 <h3>Users</h3>
@@ -39,16 +33,20 @@
             </a>
         </div>
         <div class="admin-dashboard__item">
-            <a th:href="@{/admin/displayProfile}">
-                <h3>Profile</h3>
+            <a th:href="@{/displayMessages/page/1?sortField=name&sortDir=desc}">
+                <h3>Messages</h3>
             </a>
         </div>
         <div class="admin-dashboard__item">
             <a th:href="@{/admin/displayReviews/page/1?sortField=reviewId&sortDir=desc}">
-                <h3>Testimonals</h3>
+                <h3>Testimonials</h3>
             </a>
         </div>
-
+        <div class="admin-dashboard__item">
+            <a th:href="@{/admin/displayProfile}">
+                <h3>Profile</h3>
+            </a>
+        </div>
     </div>
 
 

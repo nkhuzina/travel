@@ -11,8 +11,6 @@
 
 <body>
 
-<script type="/assets/text/javascript" src="assets/js/main.js"></script>
-
 <section class="container">
     <!-- header -->
     <div th:replace="~{header :: header}">...</div>
@@ -21,6 +19,7 @@
     <section class="tour-container">
         <h2>Complete Tour form </h2>
         <form action="#" th:action="@{/admin/saveTour}" method="post" class="tour-form" enctype="multipart/form-data" th:object="${tour}">
+            <input type="hidden" id="tourId" th:field="*{tourId}">
             <table class="tour-form-table">
                 <tr>
                     <td class="tour-form-table-label"><label for="name">Name</label></td>
@@ -41,19 +40,22 @@
                 <tr>
                     <td class="tour-form-table-label"><label for="name">Image Main</label></td>
                     <td>
-                        <input type="file" accept="image/*" name="image1" placeholder="Upload Image 1"  />
+                        <input type="file" accept="image/*" name="image1" placeholder="Upload Image"  />
+                        <img style="max-width: 50px" th:src="${imagesBaseUrl + (tour.imagePath != null ? tour.imagePath : 'default.jpg')}" alt="Tour Image">
                     </td>
                 </tr>
                 <tr>
                     <td class="tour-form-table-label"><label for="name">Image</label></td>
                     <td>
-                        <input type="file" accept="image/*" name="image2" placeholder="Upload Image 2"  />
+                        <input type="file" accept="image/*" name="image2" placeholder="Upload Image"  />
+                        <img style="max-width: 50px" th:src="${imagesBaseUrl + (tour.imagePath2 != null ? tour.imagePath2 : 'default.jpg')}" alt="Tour Image">
                     </td>
                 </tr>
                 <tr>
                     <td class="tour-form-table-label"><label for="name">Image</label></td>
                     <td>
-                        <input type="file" accept="image/*" name="image3" placeholder="Upload Image 3"  />
+                        <input type="file" accept="image/*" name="image3" placeholder="Upload Image"  />
+                        <img style="max-width: 50px" th:src="${imagesBaseUrl + (tour.imagePath3 != null ? tour.imagePath3 : 'default.jpg')}" alt="Tour Image">
                     </td>
                 </tr>
                 <tr>

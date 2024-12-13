@@ -57,8 +57,10 @@ public class TourController {
     @GetMapping("/tour")
     public String displayTour(Model model,
                               @RequestParam(name = "tourId") Integer tourId) {
-        model.addAttribute("tourId", tourId);
+        Tour tour = tourService.findTourById(tourId);
+        model.addAttribute("tour", tour);
         model.addAttribute("contact", new Contact());
+        model.addAttribute("imagesBaseUrl", s3Properties.getImagesBaseUrl());
         return "tourPage.html";
     }
 
@@ -69,7 +71,9 @@ public class TourController {
                            Model model) {
         if(errors.hasErrors()){
             log.error("Tour form validation failed due to : " + errors.toString());
-            model.addAttribute("tourId", tourId);
+            Tour tour = tourService.findTourById(tourId);
+            model.addAttribute("tour", tour);
+            model.addAttribute("imagesBaseUrl", s3Properties.getImagesBaseUrl());
             return "tourPage.html";
         }
         contact.setType(ApplicationType.JOIN);
@@ -78,22 +82,51 @@ public class TourController {
         return "redirect:/tour?tourId="+tourId;
     }
 
+    @GetMapping("/admin/updateTour")
+    public ModelAndView updateTour(Model model, @RequestParam(name = "tourId") Integer tourId) {
+        Tour tour = tourService.findTourById(tourId);
+        model.addAttribute("tour", tour);
+        ModelAndView modelAndView = new ModelAndView("updateTour.html");
+        modelAndView.addObject("imagesBaseUrl", s3Properties.getImagesBaseUrl());
+        return modelAndView;
+    }
 
     @RequestMapping(value = "/admin/saveTour", method = POST)
-    public String saveTour(@Valid @ModelAttribute("tour") Tour tour,
-                           @RequestParam("image") MultipartFile file, Errors errors) throws IOException {
-        if(errors.hasErrors()){
-            log.error("Tour form validation failed due to : " + errors.toString());
+    public String saveTour(
+            @Valid @ModelAttribute("tour") Tour tour,
+            @RequestParam(value = "image1", required = false) MultipartFile file1,
+            @RequestParam(value = "image2", required = false) MultipartFile file2,
+            @RequestParam(value = "image3", required = false) MultipartFile file3,
+            Errors errors) throws IOException {
+
+        if (errors.hasErrors()) {
+            log.error("Validation failed: {}", errors);
             return "tour.html";
         }
-        uploadFileTos3bucket(file);
-        tour.setImagePath(Paths.get(file.getOriginalFilename()).toString());
-        tourService.createNewTour(tour);
+
+        Tour tourPrev = (tour.getTourId() != null) ? tourService.findTourById(tour.getTourId()) : null;
+
+        tour.setImagePath(getImagePath(file1, tourPrev != null ? tourPrev.getImagePath() : null));
+        uploadFileTos3bucket(file1);
+        tour.setImagePath2(getImagePath(file2, tourPrev != null ? tourPrev.getImagePath2() : null));
+        uploadFileTos3bucket(file2);
+        tour.setImagePath3(getImagePath(file3, tourPrev != null ? tourPrev.getImagePath3() : null));
+        uploadFileTos3bucket(file3);
+
+        tourService.saveTour(tour);
+
         return "redirect:/admin/displayTours/page/1?sortField=tourId&sortDir=desc";
+    }
+    private String getImagePath(MultipartFile file, String previousPath) throws IOException {
+        if (file != null && !file.isEmpty() && file.getSize() > 0) {
+            return file.getOriginalFilename();
+        }
+        return previousPath;
     }
 
 
     private void uploadFileTos3bucket(MultipartFile file) throws IOException {
+        if (file.isEmpty()) return;
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(s3Properties.getAccessKey(),
                 s3Properties.getSecretKey());
         try (S3Client s3Client = S3Client.builder()
@@ -102,7 +135,7 @@ public class TourController {
                 .build()) {
             PutObjectRequest putRequest = PutObjectRequest.builder()
                     .bucket(s3Properties.getBucketName())
-                    .key( file.getOriginalFilename())
+                    .key(file.getOriginalFilename())
                     .build();
             s3Client.putObject(putRequest,
                     RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
@@ -128,11 +161,6 @@ public class TourController {
     }
 
 
-//@RequestMapping(value = "admin/tourEdit", method = GET)
-//    public String editTourPage(Model model) {
-//        model.addAttribute("tour", new Tour());
-//        return "tour.html";
-//    }
     @RequestMapping(value = "/admin/tour/changeStatus", method = GET)
     public String changeTourStatus(@RequestParam int id) {
         tourService.updateShowOnPageStatus(id);

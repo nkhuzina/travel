@@ -18,7 +18,7 @@ public class Tour extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name="native", strategy ="native")
     @Column(name = "tour_id")
-    private int tourId;
+    private Integer tourId;
 
     @NotBlank(message="Name must not be blank")
     @Size(min=3, message="Name must be at least 3 characters long")
@@ -34,6 +34,10 @@ public class Tour extends BaseEntity {
     private String fees;
 
     private String imagePath;
+    private String imagePath2;
+    private String imagePath3;
+
+    private String description;
 
     private Boolean show;
 

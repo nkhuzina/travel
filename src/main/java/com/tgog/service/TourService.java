@@ -22,13 +22,14 @@ public class TourService {
     @Autowired
     AppProporties appProporties;
 
-    public boolean createNewTour(Tour tour) {
-        boolean isSaved = false;
-        Tour res =  tourRepository.save(tour);
-        if (null != res && res.getTourId() > 0) {
-            isSaved = true;
+    public boolean saveTour(Tour tour) {
+        boolean isUpdated = false;
+
+        tour = tourRepository.save(tour);
+        if (null != tour && tour.getTourId() > 0) {
+            isUpdated = true;
         }
-        return isSaved;
+        return isUpdated;
     }
 
     public Page<Tour> findAllTours(int pageNum, String sortField, String sortDir){
@@ -50,5 +51,9 @@ public class TourService {
             isUpdated = true;
         }
         return isUpdated;
+    }
+
+    public  Tour findTourById(int tourId){
+        return  tourRepository.findById(tourId).orElseThrow();
     }
 }

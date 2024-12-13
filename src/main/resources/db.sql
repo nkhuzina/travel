@@ -28,7 +28,7 @@ CREATE TABLE public.reviews (
 
 
 CREATE TABLE public.tours (
-	tour_id numeric NOT NULL, -- Tour Id
+	tour_id int4 NOT NULL, -- Tour Id
 	"name" varchar(64) NOT NULL, -- Tour Name
 	begin_date date NOT NULL, -- Tour Begin Date
 	end_date date NOT NULL, -- Tour End Date
@@ -45,7 +45,7 @@ CREATE TABLE public.tours (
 COMMENT ON TABLE public.tours IS 'List of tours';
 
 CREATE TABLE public.contact_msg (
-	contact_id numeric NOT NULL,
+	contact_id int4 NOT NULL,
 	"name" varchar(100) NOT NULL,
 	mobile_num varchar(10) NOT NULL,
 	email varchar(100) NOT NULL,
